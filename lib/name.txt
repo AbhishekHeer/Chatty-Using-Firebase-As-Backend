@@ -1,0 +1,10 @@
+
+adb connect 25.232.232.68
+adb tcpip 5555
+adb connect 25.172.3.67.2409
+adb connect 192.168.40.242
+
+
+
+keytool -list -v -keystore "C:\Users\deepa\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+

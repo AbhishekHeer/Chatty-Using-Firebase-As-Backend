@@ -1,0 +1,65 @@
+{
+    "duration": 3000,
+    "loop": true,
+    "elements": [
+        {
+            "type": "image",
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Chatty_Logo.svg/255px-Chatty_Logo.svg.png",
+            "width": 255,
+            "height": 255,
+            "x": 0,
+            "y": 0,
+            "animations": [
+                {
+                    "type": "anytype",
+                    "duration": 2000,
+                    "easing": "easeInOutQuad",
+                    "properties": {
+                        "x": {
+                            "from": 0,
+                            "to": 50
+                        },
+                        "y": {
+                            "from": 0,
+                            "to": 50
+                        },
+                        "scale": {
+                            "from": 1,
+                            "to": 1.2
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Chatty",
+            "font": "Arial",
+            "size": 48,
+            "color": "#000000",
+            "x": 100,
+            "y": 100,
+            "animations": [
+                {
+                    "type": "anytype",
+                    "duration": 2000,
+                    "easing": "easeInOutQuad",
+                    "properties": {
+                        "x": {
+                            "from": 100,
+                            "to": 150
+                        },
+                        "y": {
+                            "from": 100,
+                            "to": 150
+                        },
+                        "rotation": {
+                            "from": 0,
+                            "to": 360
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
