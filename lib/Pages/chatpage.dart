@@ -39,7 +39,7 @@ class _ChatPageState extends State<ChatPage> {
               backgroundImage: NetworkImage(widget.photo),
             ),
             SizedBox(
-              width: Get.width * .05,
+              width: Get.width * .02,
             ),
             Text(widget.name)
           ],
@@ -48,7 +48,7 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(FontAwesomeIcons.grip),
+            icon: const Icon(FontAwesomeIcons.cloudBolt),
           ),
         ],
       ),

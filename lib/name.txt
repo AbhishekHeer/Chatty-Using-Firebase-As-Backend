@@ -1,0 +1,3 @@
+adb tcpip 5555
+
+adb connect 25.120.128.128

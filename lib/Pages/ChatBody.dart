@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class ChatBody extends StatefulWidget {
@@ -48,31 +49,97 @@ class _ChatBodyState extends State<ChatBody> {
                   ? Alignment.bottomRight
                   : Alignment.bottomLeft;
 
+              var photo = FirebaseAuth.instance.currentUser!.uid !=
+                      snapshot.data?.docs[index]['ReceiverID']
+                  ? CircleAvatar(
+                      backgroundImage: NetworkImage(FirebaseAuth
+                          .instance.currentUser!.photoURL
+                          .toString()),
+                    )
+                  : CircleAvatar(
+                      radius: Get.height * .02,
+                      backgroundImage: NetworkImage(''),
+                    );
+
               var deco = FirebaseAuth.instance.currentUser!.uid ==
                       snapshot.data?.docs[index]['ReceiverID']
                   ? BoxDecoration(
-                      borderRadius: BorderRadius.circular(Get.width * .02),
-                      color: Colors.blueAccent)
+                      borderRadius: BorderRadius.circular(Get.width / 2),
+                      color: const Color.fromARGB(255, 115, 149, 209))
                   : BoxDecoration(
-                      borderRadius: BorderRadius.circular(Get.width * .02),
+                      borderRadius: BorderRadius.circular(Get.width / 2),
                       color: Colors.grey);
 
-              return SafeArea(
-                child: Align(
-                  alignment: align,
+              return Align(
+                alignment: align,
+                child: SafeArea(
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: Get.width * .02),
-                    child: Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: Get.height * .004,
-                        horizontal: Get.width * .02,
-                      ),
-                      width: Get.width * .4,
-                      height: Get.height * .05,
-                      decoration: deco,
-                      child: Center(
-                          child: Text(snapshot.data?.docs[index]['Messege'])),
-                    ),
+                    padding: EdgeInsets.only(top: Get.width * .004),
+                    child: IntrinsicWidth(
+                        child: FirebaseAuth.instance.currentUser!.uid !=
+                                snapshot.data?.docs[index]['ReceiverID']
+                            ? Row(
+                                children: [
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: Get.height * .002,
+                                        horizontal: Get.width * .005),
+                                    height: Get.height * .06,
+                                    decoration: deco,
+                                    child: SizedBox(
+                                      height: double.infinity,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: Get.width * .04),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data?.docs[index]
+                                                ['Messege'],
+                                            softWrap: true,
+                                            style: GoogleFonts.niramit(
+                                                fontSize: Get.width * .04),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  photo,
+                                  SizedBox(
+                                    width: Get.width * .03,
+                                  )
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  SizedBox(
+                                    width: Get.width * .03,
+                                  ),
+                                  photo,
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: Get.height * .002,
+                                        horizontal: Get.width * .005),
+                                    height: Get.height * .06,
+                                    decoration: deco,
+                                    child: SizedBox(
+                                      height: double.infinity,
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: Get.width * .04),
+                                        child: Center(
+                                          child: Text(
+                                            snapshot.data?.docs[index]
+                                                ['Messege'],
+                                            softWrap: true,
+                                            style: GoogleFonts.niramit(
+                                                fontSize: Get.width * .04),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )),
                   ),
                 ),
               );
