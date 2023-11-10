@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Routes/approutes.dart';
 import 'package:chat_app/firebase_options.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -44,6 +46,9 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final auth = FirebaseAuth.instance;
+
+  NotificationService noti = NotificationService();
+
   @override
   void initState() {
     super.initState();
@@ -54,8 +59,14 @@ class _SplashScreenState extends State<SplashScreen> {
         navigator!.pushReplacementNamed('/LoginScreen');
       }
     });
+    noti.reqPermisson();
+
+    noti.token().then((value) {}).onError((error, stackTrace) {
+      print(error.toString());
+    });
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -72,6 +83,13 @@ class _SplashScreenState extends State<SplashScreen> {
               'chatty',
               style: GoogleFonts.fahkwang(
                   fontSize: Get.width * .04, fontWeight: FontWeight.w300),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: Get.height * .04),
+            child: const Align(
+              alignment: Alignment.bottomCenter,
+              child: Text('Version 1.2.0'),
             ),
           )
         ],

@@ -11,7 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 // ignore: must_be_immutable
 class ChatBody extends StatefulWidget {
   String recieverid;
-  ChatBody({super.key, required this.recieverid});
+  String image;
+  ChatBody({super.key, required this.recieverid, required this.image});
 
   @override
   State<ChatBody> createState() => _ChatBodyState();
@@ -58,7 +59,7 @@ class _ChatBodyState extends State<ChatBody> {
                     )
                   : CircleAvatar(
                       radius: Get.height * .02,
-                      backgroundImage: NetworkImage(''),
+                      backgroundImage: NetworkImage(widget.image),
                     );
 
               var deco = FirebaseAuth.instance.currentUser!.uid ==
@@ -103,6 +104,9 @@ class _ChatBodyState extends State<ChatBody> {
                                       ),
                                     ),
                                   ),
+                                  SizedBox(
+                                    width: Get.width * .01,
+                                  ),
                                   photo,
                                   SizedBox(
                                     width: Get.width * .03,
@@ -115,6 +119,9 @@ class _ChatBodyState extends State<ChatBody> {
                                     width: Get.width * .03,
                                   ),
                                   photo,
+                                  SizedBox(
+                                    width: Get.width * .01,
+                                  ),
                                   Container(
                                     margin: EdgeInsets.symmetric(
                                         vertical: Get.height * .002,

@@ -1,25 +1,33 @@
+import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Getx/chatroom.dart';
 import 'package:chat_app/Pages/ChatBody.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ChatPage extends StatefulWidget {
   final String RecieverID;
   final String name;
   final String photo;
 
-  ChatPage(
-      {super.key,
-      required this.RecieverID,
-      required this.name,
-      required this.photo});
+  const ChatPage({
+    super.key,
+    required this.RecieverID,
+    required this.name,
+    required this.photo,
+  });
 
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
+
+final Noti = NotificationService();
+
+@override
+void initState() {}
 
 final _mesege = TextEditingController();
 final auth = FirebaseAuth.instance;
@@ -47,16 +55,21 @@ class _ChatPageState extends State<ChatPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(FontAwesomeIcons.cloudBolt),
+            onPressed: () async {
+              var status = await Permission.photos.request();
+              if (status.isGranted) {
+                print('odpow');
+              } else if (status.isPermanentlyDenied) {
+                openAppSettings();
+              }
+            },
+            icon: const Icon(CupertinoIcons.doc_on_clipboard),
           ),
         ],
       ),
       body: Padding(
         padding: EdgeInsets.only(bottom: Get.height * .05),
-        child: ChatBody(
-          recieverid: widget.RecieverID,
-        ),
+        child: ChatBody(recieverid: widget.RecieverID, image: widget.photo),
       ),
       bottomSheet: Padding(
         padding: EdgeInsets.symmetric(horizontal: Get.width * .04),
@@ -65,7 +78,7 @@ class _ChatPageState extends State<ChatPage> {
             Expanded(
               child: TextField(
                 controller: _mesege,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     border: InputBorder.none, hintText: 'Messege'),
               ),
             ),

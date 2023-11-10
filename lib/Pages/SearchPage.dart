@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:animated_icon/animated_icon.dart';
 import 'package:chat_app/Pages/chatpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,34 +47,32 @@ class _SearcchUserState extends State<SearcchUser> {
                 stream: store.snapshots(),
                 builder: ((context, snapshot) {
                   return ListView.builder(
-                    itemCount: snapshot.data?.docs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(
-                            child: AnimateIcon(
-                          key: UniqueKey(),
-                          onTap: () {},
-                          iconType: IconType.continueAnimation,
-                          color: Color.fromRGBO(
-                              Random.secure().nextInt(255),
-                              Random.secure().nextInt(255),
-                              Random.secure().nextInt(255),
-                              1),
-                          animateIcon: AnimateIcons.chatMessage,
-                        ));
-                      } else {
-                        if (snapshot.data?.docs[index]['name']
+                      itemCount: snapshot.data?.docs.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                              child: AnimateIcon(
+                            key: UniqueKey(),
+                            onTap: () {},
+                            iconType: IconType.continueAnimation,
+                            color: Color.fromRGBO(
+                                Random.secure().nextInt(255),
+                                Random.secure().nextInt(255),
+                                Random.secure().nextInt(255),
+                                1),
+                            animateIcon: AnimateIcons.chatMessage,
+                          ));
+                        } else if (snapshot.data?.docs[index]['name']
                             .toLowerCase()
                             .contains(search.text.toLowerCase())) {
                           return ListTile(
                             onTap: () async {
-                              await Get.to(
-                                ChatPage(
-                                  RecieverID: snapshot.data?.docs[index]['id'],
-                                  name: snapshot.data?.docs[index]['name'],
-                                  photo: snapshot.data?.docs[index]['image'],
-                                ),
-                              );
+                              await Get.to(ChatPage(
+                                RecieverID: snapshot.data?.docs[index]['id'],
+                                name: snapshot.data?.docs[index]['name'],
+                                photo: snapshot.data?.docs[index]['image'],
+                              ));
                             },
                             leading: CircleAvatar(
                               radius: Get.width * .04,
@@ -92,9 +91,7 @@ class _SearcchUserState extends State<SearcchUser> {
                         } else {
                           return null;
                         }
-                      }
-                    },
-                  );
+                      });
                 })),
           )
         ],
