@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Routes/approutes.dart';
 import 'package:chat_app/firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +17,13 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseMessaging.onBackgroundMessage(backgroundmessege);
   runApp(const MyApp());
+}
+
+@pragma('vm:entry-point')
+Future<void> backgroundmessege(RemoteMessage messege) async {
+  await Firebase.initializeApp();
 }
 
 class MyApp extends StatelessWidget {
@@ -60,10 +68,8 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     });
     noti.reqPermisson();
-
-    noti.token().then((value) {}).onError((error, stackTrace) {
-      print(error.toString());
-    });
+    noti.token().then((value) {}).onError((error, stackTrace) {});
+    noti.Firebaseinit(context);
   }
 
   @override

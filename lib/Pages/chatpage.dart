@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Getx/chatroom.dart';
 import 'package:chat_app/Pages/ChatBody.dart';
@@ -6,19 +8,20 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
   final String RecieverID;
   final String name;
   final String photo;
+  final receiverDeviceToken;
 
-  const ChatPage({
-    super.key,
-    required this.RecieverID,
-    required this.name,
-    required this.photo,
-  });
+  const ChatPage(
+      {super.key,
+      required this.RecieverID,
+      required this.name,
+      required this.photo,
+      required this.receiverDeviceToken});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
@@ -55,14 +58,7 @@ class _ChatPageState extends State<ChatPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () async {
-              var status = await Permission.photos.request();
-              if (status.isGranted) {
-                print('odpow');
-              } else if (status.isPermanentlyDenied) {
-                openAppSettings();
-              }
-            },
+            onPressed: () async {},
             icon: const Icon(CupertinoIcons.doc_on_clipboard),
           ),
         ],
@@ -83,10 +79,30 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
             IconButton(
-              onPressed: () {
+              onPressed: () async {
                 if (_mesege.text.isNotEmpty) {
-                  sendMessege(widget.RecieverID, _mesege.text);
+                  sendMessege(
+                      widget.RecieverID, _mesege.text, widget.RecieverID);
                   _mesege.clear();
+
+                  NotificationService().token().then((value) async {
+                    var data = {
+                      'to': widget.receiverDeviceToken,
+                      'priority': 'high',
+                      'notification': {
+                        'title': widget.name,
+                        'body': _mesege.text,
+                      }
+                    };
+                    await http.post(
+                        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+                        body: jsonEncode(data),
+                        headers: {
+                          'content-type': 'application/json; charset=UTF-8',
+                          'Authorization':
+                              'key=AAAAhIgpBVE:APA91bFRlzL2nZk2C26Cwgiuxl_nchOfbHfYx48aaaqehJe5UrXs4V2U57PZYfuVV7m8yt9K_5R_eUZU1R9hlNAY288Wnt9I5e8eM0Uup1EzivRCU9vVDYBuDRPYEepEdQGn0jEP8pNg'
+                        });
+                  });
                 } else {
                   Get.snackbar('Empty', 'Please Enter Messege');
                 }

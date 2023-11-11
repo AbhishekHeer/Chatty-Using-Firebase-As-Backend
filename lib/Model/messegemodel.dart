@@ -5,9 +5,11 @@ class messege {
   final String receiverID;
   final String text;
   final String timerStap;
+  final String devicetoken;
+  final String receiverDeviceToken;
 
   messege(this.senderID, this.senderEmail, this.receiverID, this.text,
-      this.timerStap);
+      this.timerStap, this.devicetoken, this.receiverDeviceToken);
 
   Map<String, dynamic> toMap() {
     return {
@@ -16,6 +18,8 @@ class messege {
       'ReceiverID': receiverID,
       'Messege': text,
       'timerStap': timerStap,
+      'devicetoken': devicetoken,
+      'receiverDeviceToken': receiverDeviceToken
     };
   }
 }

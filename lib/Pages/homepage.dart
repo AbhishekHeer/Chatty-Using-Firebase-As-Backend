@@ -38,10 +38,8 @@ class HomePage extends StatelessWidget {
                 }
               },
               child: CircleAvatar(
-                backgroundImage: NetworkImage(image.isNotEmpty
-                    ? 'https://drive.google.com/file/d/14Vtav-RmLHiwQbc1HXXJSDwelUEjcqB7/view?usp=drive_link'
-                        .toString()
-                    : image),
+                backgroundImage: NetworkImage(
+                    image.isNotEmpty ? 'Assets/images/logo.jpg' : image),
               ),
             ),
           ),
@@ -64,7 +62,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        body: Column(
+        body: const Column(
           children: [
             Expanded(child: HomeBody()),
           ],
