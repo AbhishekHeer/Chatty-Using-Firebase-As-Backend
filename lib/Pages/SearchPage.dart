@@ -73,7 +73,7 @@ class _SearcchUserState extends State<SearcchUser> {
                                 name: snapshot.data?.docs[index]['name'],
                                 photo: snapshot.data?.docs[index]['image'],
                                 receiverDeviceToken: snapshot.data?.docs[index]
-                                    ['receiverDeviceToken'],
+                                    ['token'],
                               ));
                             },
                             leading: CircleAvatar(

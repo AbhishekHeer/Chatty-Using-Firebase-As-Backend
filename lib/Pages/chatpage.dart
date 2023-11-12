@@ -1,13 +1,12 @@
-import 'dart:convert';
-
+import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Getx/chatroom.dart';
 import 'package:chat_app/Pages/ChatBody.dart';
+import 'package:chat_app/post/postmessege.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart' as http;
 
 class ChatPage extends StatefulWidget {
   final String RecieverID;
@@ -52,13 +51,31 @@ class _ChatPageState extends State<ChatPage> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () async {},
+            onPressed: () async {
+              showAdaptiveDialog(
+                  context: context,
+                  builder: ((context) {
+                    return AlertDialog.adaptive(
+                      title: const Text('Opps !!'),
+                      content:
+                          const Text('This Will Come in Future Stay With Us'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Text Button",
+                          ),
+                        ),
+                      ],
+                    );
+                  }));
+            },
             icon: const Icon(CupertinoIcons.doc_on_clipboard),
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.only(bottom: Get.height * .05),
+        padding: EdgeInsets.only(bottom: Get.height * .08),
         child: ChatBody(recieverid: widget.RecieverID, image: widget.photo),
       ),
       bottomSheet: Padding(
@@ -79,23 +96,13 @@ class _ChatPageState extends State<ChatPage> {
                       widget.receiverDeviceToken);
                   _mesege.clear();
 
-                  var data = {
-                    'to': widget.receiverDeviceToken,
-                    'priority': 'high',
-                    'notification': {
-                      'title': widget.name,
-                      'body': _mesege.text.toString(),
-                    }
-                  };
-                  await http.post(
-                    Uri.parse('https://fcm.googleapis.com/fcm/send'),
-                    body: jsonEncode(data),
-                    headers: {
-                      'content-type': 'application/json; charset=UTF-8',
-                      'Authorization':
-                          'key=AAAAhIgpBVE:APA91bFRlzL2nZk2C26Cwgiuxl_nchOfbHfYx48aaaqehJe5UrXs4V2U57PZYfuVV7m8yt9K_5R_eUZU1R9hlNAY288Wnt9I5e8eM0Uup1EzivRCU9vVDYBuDRPYEepEdQGn0jEP8pNg',
-                    },
-                  );
+                  NotificationService().token().then((value) {
+                    sendNotificaiton(
+                        FirebaseAuth.instance.currentUser!.displayName
+                            .toString(),
+                        _mesege.text.toString(),
+                        widget.receiverDeviceToken);
+                  });
                 } else {
                   Get.snackbar('Empty', 'Please Enter Messege');
                 }

@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
 
 class NotificationService {
   FirebaseMessaging messege = FirebaseMessaging.instance;
@@ -29,10 +29,7 @@ class NotificationService {
     );
 
     if (setting.authorizationStatus == AuthorizationStatus.authorized) {
-      print('aage jaoo');
-    } else {
-      print('denied');
-    }
+    } else {}
   }
 
 //init local
@@ -53,8 +50,9 @@ class NotificationService {
   // handle messege
 
   void handleMessege(BuildContext context, RemoteMessage messege) async {
-    if (messege.data['type'] == 'ashh') {
-      Get.to(HomePage());
+    if (messege.data['type'] == 'msj') {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     }
   }
 

@@ -19,8 +19,6 @@ class ChatBody extends StatefulWidget {
   State<ChatBody> createState() => _ChatBodyState();
 }
 
-final store = FirebaseFirestore.instance.collection('room');
-
 class _ChatBodyState extends State<ChatBody> {
   @override
   Widget build(BuildContext context) {
@@ -44,8 +42,6 @@ class _ChatBodyState extends State<ChatBody> {
           );
         } else {
           return ListView.builder(
-            key: snapshot.data?.docs[FirebaseAuth.instance.currentUser!.uid]
-                ['timerStap'],
             itemCount: snapshot.data?.docs.length,
             itemBuilder: (BuildContext context, int index) {
               Alignment align = FirebaseAuth.instance.currentUser!.uid !=
@@ -56,6 +52,7 @@ class _ChatBodyState extends State<ChatBody> {
               var photo = FirebaseAuth.instance.currentUser!.uid !=
                       snapshot.data?.docs[index]['ReceiverID']
                   ? CircleAvatar(
+                      radius: Get.height * .02,
                       backgroundImage: NetworkImage(FirebaseAuth
                           .instance.currentUser!.photoURL
                           .toString()),
@@ -65,7 +62,7 @@ class _ChatBodyState extends State<ChatBody> {
                       backgroundImage: NetworkImage(widget.image),
                     );
 
-              var deco = FirebaseAuth.instance.currentUser!.uid ==
+              var deco = FirebaseAuth.instance.currentUser?.uid ==
                       snapshot.data?.docs[index]['ReceiverID']
                   ? BoxDecoration(
                       borderRadius: BorderRadius.circular(Get.width / 2),
@@ -80,7 +77,7 @@ class _ChatBodyState extends State<ChatBody> {
                   child: Padding(
                     padding: EdgeInsets.only(top: Get.width * .004),
                     child: IntrinsicWidth(
-                        child: FirebaseAuth.instance.currentUser!.uid !=
+                        child: FirebaseAuth.instance.currentUser?.uid !=
                                 snapshot.data?.docs[index]['ReceiverID']
                             ? Row(
                                 children: [

@@ -61,9 +61,9 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 2), () {
       if (auth.currentUser != null) {
-        navigator!.pushReplacementNamed('/home');
+        navigator?.pushReplacementNamed('/home');
       } else {
-        navigator!.pushReplacementNamed('/LoginScreen');
+        navigator?.pushReplacementNamed('/LoginScreen');
       }
     });
     noti.reqPermisson();
