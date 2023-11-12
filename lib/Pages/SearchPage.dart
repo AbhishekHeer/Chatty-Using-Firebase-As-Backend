@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:math';
 
 import 'package:animated_icon/animated_icon.dart';
@@ -66,13 +67,13 @@ class _SearcchUserState extends State<SearcchUser> {
                             .toLowerCase()
                             .contains(search.text.toLowerCase())) {
                           return ListTile(
-                            onTap: () async {
-                              await Get.to(ChatPage(
+                            onTap: () {
+                              Get.to(ChatPage(
                                 RecieverID: snapshot.data?.docs[index]['id'],
                                 name: snapshot.data?.docs[index]['name'],
                                 photo: snapshot.data?.docs[index]['image'],
                                 receiverDeviceToken: snapshot.data?.docs[index]
-                                    ['devicetoken'],
+                                    ['receiverDeviceToken'],
                               ));
                             },
                             leading: CircleAvatar(

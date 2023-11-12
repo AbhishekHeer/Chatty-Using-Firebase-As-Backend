@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Routes/approutes.dart';
 import 'package:chat_app/firebase_options.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:chat_app/Cloud_Messaging/NotificaitonService.dart';
 import 'package:chat_app/Getx/chatroom.dart';
 import 'package:chat_app/Pages/ChatBody.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +13,7 @@ class ChatPage extends StatefulWidget {
   final String RecieverID;
   final String name;
   final String photo;
-  final receiverDeviceToken;
+  final String receiverDeviceToken;
 
   const ChatPage(
       {super.key,
@@ -26,11 +25,6 @@ class ChatPage extends StatefulWidget {
   @override
   State<ChatPage> createState() => _ChatPageState();
 }
-
-final Noti = NotificationService();
-
-@override
-void initState() {}
 
 final _mesege = TextEditingController();
 final auth = FirebaseAuth.instance;
@@ -81,28 +75,27 @@ class _ChatPageState extends State<ChatPage> {
             IconButton(
               onPressed: () async {
                 if (_mesege.text.isNotEmpty) {
-                  sendMessege(
-                      widget.RecieverID, _mesege.text, widget.RecieverID);
+                  sendMessege(widget.RecieverID, _mesege.text,
+                      widget.receiverDeviceToken);
                   _mesege.clear();
 
-                  NotificationService().token().then((value) async {
-                    var data = {
-                      'to': widget.receiverDeviceToken,
-                      'priority': 'high',
-                      'notification': {
-                        'title': widget.name,
-                        'body': _mesege.text,
-                      }
-                    };
-                    await http.post(
-                        Uri.parse('https://fcm.googleapis.com/fcm/send'),
-                        body: jsonEncode(data),
-                        headers: {
-                          'content-type': 'application/json; charset=UTF-8',
-                          'Authorization':
-                              'key=AAAAhIgpBVE:APA91bFRlzL2nZk2C26Cwgiuxl_nchOfbHfYx48aaaqehJe5UrXs4V2U57PZYfuVV7m8yt9K_5R_eUZU1R9hlNAY288Wnt9I5e8eM0Uup1EzivRCU9vVDYBuDRPYEepEdQGn0jEP8pNg'
-                        });
-                  });
+                  var data = {
+                    'to': widget.receiverDeviceToken,
+                    'priority': 'high',
+                    'notification': {
+                      'title': widget.name,
+                      'body': _mesege.text.toString(),
+                    }
+                  };
+                  await http.post(
+                    Uri.parse('https://fcm.googleapis.com/fcm/send'),
+                    body: jsonEncode(data),
+                    headers: {
+                      'content-type': 'application/json; charset=UTF-8',
+                      'Authorization':
+                          'key=AAAAhIgpBVE:APA91bFRlzL2nZk2C26Cwgiuxl_nchOfbHfYx48aaaqehJe5UrXs4V2U57PZYfuVV7m8yt9K_5R_eUZU1R9hlNAY288Wnt9I5e8eM0Uup1EzivRCU9vVDYBuDRPYEepEdQGn0jEP8pNg',
+                    },
+                  );
                 } else {
                   Get.snackbar('Empty', 'Please Enter Messege');
                 }

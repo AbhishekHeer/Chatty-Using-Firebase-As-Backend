@@ -45,7 +45,7 @@ class method {
         'token': token
       }).then((value) {
         // final detail = FirebaseAuth.instance.currentUser!.providerData;
-        navigator!.pushReplacementNamed('/home');
+        navigator?.pushReplacementNamed('/home');
       }).whenComplete(() {
         Get.snackbar('Done', 'Welcome To Chat World');
       });
@@ -77,10 +77,10 @@ class method {
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
       );
-      FirebaseAuth.instance.signInWithCredential(credential).printInfo();
+      FirebaseAuth.instance.signInWithCredential(credential);
 
       if (auth.currentUser!.uid == email) {
-        firestore.collection('users').doc(Auth.currentUser!.uid).get();
+        firestore.collection('users').doc(Auth.currentUser?.uid).get();
       }
 
       var re = await firestore.collection('users').doc(id).set({
@@ -90,7 +90,7 @@ class method {
         "name": nme,
         'token': token
       }).then((value) {
-        navigator!.pushReplacementNamed('/home');
+        navigator?.pushReplacementNamed('/home');
       });
       return re;
     } catch (e) {
@@ -101,7 +101,7 @@ class method {
 //sign out
   signout() {
     final user = Auth.signOut().then((value) {
-      navigator!.pushReplacementNamed('/LoginScreen');
+      navigator?.pushReplacementNamed('/LoginScreen');
     });
     return user;
   }

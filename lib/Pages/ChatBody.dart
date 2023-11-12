@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:math';
 
 import 'package:animated_icon/animated_icon.dart';
@@ -43,6 +44,8 @@ class _ChatBodyState extends State<ChatBody> {
           );
         } else {
           return ListView.builder(
+            key: snapshot.data?.docs[FirebaseAuth.instance.currentUser!.uid]
+                ['timerStap'],
             itemCount: snapshot.data?.docs.length,
             itemBuilder: (BuildContext context, int index) {
               Alignment align = FirebaseAuth.instance.currentUser!.uid !=
