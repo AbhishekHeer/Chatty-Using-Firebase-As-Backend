@@ -37,7 +37,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.red,
       ),
-      themeMode: ThemeMode.light,
+      darkTheme: ThemeData.dark(useMaterial3: true),
+      themeMode: ThemeMode.system,
       getPages: appRoutes(),
       initialRoute: '/',
     );

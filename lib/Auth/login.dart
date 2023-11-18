@@ -92,7 +92,7 @@ class LoginPage extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                method().signInWithGoogle().then((value) async {
+                method().signInWithGoogle(context).then((value) async {
                   navigator!.pushReplacementNamed('/home');
                 });
               },
@@ -109,7 +109,7 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     Get.toNamed('signup');
                   },
-                  child: Text(
+                  child: const Text(
                     "Sign-Up",
                   ),
                 ),

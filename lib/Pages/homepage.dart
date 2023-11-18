@@ -1,15 +1,21 @@
-import 'package:chat_app/Auth/authmethod.dart';
+import 'package:animated_icon/animated_icon.dart';
+import 'package:carbon_icons/carbon_icons.dart';
 import 'package:chat_app/Pages/Homebody.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  final image = FirebaseAuth.instance.currentUser!.photoURL.toString();
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final image = FirebaseAuth.instance.currentUser?.photoURL.toString();
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +37,16 @@ class HomePage extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                           title: PinchZoom(
                             maxScale: 2.5,
-                            child: Image.network(image),
+                            child: Image.network(image.toString()),
                           ),
                         );
                       }));
                 }
               },
               child: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    image.isNotEmpty ? 'Assets/images/logo.jpg' : image),
+                backgroundImage: NetworkImage(image!.isNotEmpty
+                    ? 'Assets/images/logo.jpg'
+                    : image.toString()),
               ),
             ),
           ),
@@ -49,17 +56,17 @@ class HomePage extends StatelessWidget {
           ),
           actions: [
             Padding(
-              padding: EdgeInsets.only(right: Get.width * .02),
+              padding: EdgeInsets.only(right: Get.width * .04),
               child: IconButton(
                 onPressed: () {
-                  method().signout();
+                  Get.toNamed('/setting');
                 },
                 icon: Icon(
-                  FontAwesomeIcons.signOut,
-                  size: Get.width * .048,
+                  CupertinoIcons.settings_solid,
+                  size: Get.width * .06,
                 ),
               ),
-            ),
+            )
           ],
         ),
         body: const Column(

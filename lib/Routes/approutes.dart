@@ -1,6 +1,7 @@
 import 'package:chat_app/Auth/SignUp.dart';
 import 'package:chat_app/Auth/login.dart';
 import 'package:chat_app/Pages/homepage.dart';
+import 'package:chat_app/Setting/settingScreen.dart';
 import 'package:chat_app/main.dart';
 import 'package:get/get.dart';
 
@@ -32,6 +33,12 @@ appRoutes() => [
       GetPage(
         name: '/splash',
         page: () => const SplashScreen(),
+        transition: Transition.rightToLeftWithFade,
+        transitionDuration: const Duration(milliseconds: 500),
+      ),
+      GetPage(
+        name: '/setting',
+        page: () => const SettingScreen(),
         transition: Transition.rightToLeftWithFade,
         transitionDuration: const Duration(milliseconds: 500),
       ),

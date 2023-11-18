@@ -147,7 +147,8 @@ class _SignupState extends State<Signup> {
                                           _email.text,
                                           _password.text,
                                           _name.text,
-                                          url)
+                                          url,
+                                          context)
                                       .then((value) {
                                     Get.toNamed('/home');
                                     Get.snackbar('Done', 'Login Successfully');
@@ -159,7 +160,7 @@ class _SignupState extends State<Signup> {
                                 } on FirebaseAuthException {
                                   Get.snackbar('Error',
                                       'Email Is Already Used By Another Account');
-                                } catch (e) {}
+                                }
                               }
                             }),
                           ],
@@ -179,7 +180,7 @@ class _SignupState extends State<Signup> {
                   onPressed: () {
                     Get.offAndToNamed('LoginScreen');
                   },
-                  child: Text(
+                  child: const Text(
                     "Login",
                   ),
                 ),
