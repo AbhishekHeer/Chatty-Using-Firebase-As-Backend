@@ -47,6 +47,7 @@ class _SearcchUserState extends State<SearcchUser> {
                 stream: store.snapshots(),
                 builder: ((context, snapshot) {
                   return ListView.builder(
+                      shrinkWrap: true,
                       itemCount: snapshot.data?.docs.length,
                       itemBuilder: (BuildContext context, int index) {
                         if (snapshot.connectionState ==

@@ -1,5 +1,3 @@
-import 'package:animated_icon/animated_icon.dart';
-import 'package:carbon_icons/carbon_icons.dart';
 import 'package:chat_app/Pages/Homebody.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';

@@ -36,7 +36,8 @@ class _SettingHeadState extends State<SettingHead> {
                   backgroundColor: Colors.yellow[600],
                 ),
                 title: "Update Profile",
-                subtitle: "Tap to change your details",
+                subtitle: "Tap to change your Details",
+                subtitleStyle: TextStyle(fontSize: Get.width * .036),
                 onTap: () {
                   Get.bottomSheet(BottomSheet(
                       onClosing: () {},

@@ -61,9 +61,11 @@ class _ChatPageState extends State<ChatPage> {
                           const Text('This Will Come in Future Stay With Us'),
                       actions: [
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.back();
+                          },
                           child: const Text(
-                            "Text Button",
+                            "Close",
                           ),
                         ),
                       ],
