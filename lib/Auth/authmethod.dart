@@ -80,7 +80,7 @@ class method {
 
 //google sign in
 
-  Future<UserCredential> signInWithGoogle(BuildContext context) async {
+  Future signInWithGoogle(BuildContext context) async {
     // Trigger the authentication flow
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();

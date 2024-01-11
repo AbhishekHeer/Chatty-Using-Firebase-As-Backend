@@ -46,6 +46,13 @@ class _SearcchUserState extends State<SearcchUser> {
             child: StreamBuilder(
                 stream: store.snapshots(),
                 builder: ((context, snapshot) {
+                  if (search.text.isEmpty) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                          top: Get.height * .2, left: Get.width * .3),
+                      child: const Text('Search User to Add'),
+                    );
+                  }
                   return ListView.builder(
                       shrinkWrap: true,
                       itemCount: snapshot.data?.docs.length,

@@ -42,9 +42,9 @@ class _HomePageState extends State<HomePage> {
                 }
               },
               child: CircleAvatar(
-                backgroundImage: NetworkImage(image!.isNotEmpty
-                    ? 'Assets/images/logo.jpg'
-                    : image.toString()),
+                backgroundImage: NetworkImage(
+                  image!.isEmpty ? 'Assets/images/logo.jpg' : image.toString(),
+                ),
               ),
             ),
           ),

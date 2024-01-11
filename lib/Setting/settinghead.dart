@@ -39,32 +39,30 @@ class _SettingHeadState extends State<SettingHead> {
                 subtitle: "Tap to change your Details",
                 subtitleStyle: TextStyle(fontSize: Get.width * .036),
                 onTap: () {
-                  Get.bottomSheet(BottomSheet(
-                      onClosing: () {},
+                  showAdaptiveDialog(
+                      context: context,
                       builder: (context) {
-                        return SizedBox(
-                          height: Get.height * .5,
-                          width: Get.width,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: Get.height * .04,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Get.width * .04),
-                                child: const SearchBar(),
-                              ),
-                              SizedBox(
-                                height: Get.height * .04,
-                              ),
-                              CircleAvatar(
-                                radius: Get.width * .3,
-                              )
-                            ],
+                        return AlertDialog.adaptive(
+                          title: const Text('Oops !!'),
+                          content: SizedBox(
+                            width: Get.width,
+                            child:
+                                const Text('This Feature Is Not done Yet !!'),
                           ),
+                          actions: [
+                            Center(
+                              child: TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: const Text(
+                                  "Ok",
+                                ),
+                              ),
+                            ),
+                          ],
                         );
-                      }));
+                      });
                 },
               ),
             );

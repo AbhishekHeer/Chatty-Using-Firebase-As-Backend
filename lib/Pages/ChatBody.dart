@@ -44,12 +44,12 @@ class _ChatBodyState extends State<ChatBody> {
           return ListView.builder(
             itemCount: snapshot.data?.docs.length,
             itemBuilder: (BuildContext context, int index) {
-              Alignment align = FirebaseAuth.instance.currentUser!.uid !=
+              Alignment align = FirebaseAuth.instance.currentUser?.uid !=
                       snapshot.data?.docs[index]['ReceiverID']
                   ? Alignment.bottomRight
                   : Alignment.bottomLeft;
 
-              var photo = FirebaseAuth.instance.currentUser!.uid !=
+              var photo = FirebaseAuth.instance.currentUser?.uid !=
                       snapshot.data?.docs[index]['ReceiverID']
                   ? CircleAvatar(
                       radius: Get.height * .02,

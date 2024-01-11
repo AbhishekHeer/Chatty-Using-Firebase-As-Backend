@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData.dark(useMaterial3: true),
       themeMode: ThemeMode.system,
       getPages: appRoutes(),
-      initialRoute: '/',
+      initialRoute: '/LoginScreen',
     );
   }
 }
