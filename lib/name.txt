@@ -1,3 +1,0 @@
-adb tcpip 5555
-
-adb connect 25.207.54.124

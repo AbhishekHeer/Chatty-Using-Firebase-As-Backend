@@ -5,6 +5,7 @@ import 'package:chat_app/Setting/settinghead.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -27,7 +28,12 @@ class _SettingScreenState extends State<SettingScreen> {
             SettingsGroup(
               items: [
                 SettingsItem(
-                  onTap: () {},
+                  onTap: () {
+                    const url = "https://github.com/AbhishekHeer";
+                    launchUrl(Uri.parse(
+                      url,
+                    ));
+                  },
                   icons: Icons.info_rounded,
                   iconStyle: IconStyle(
                     backgroundColor: Colors.purple,

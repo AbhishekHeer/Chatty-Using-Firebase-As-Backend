@@ -82,66 +82,65 @@ class method {
 
   Future signInWithGoogle(BuildContext context) async {
     // Trigger the authentication flow
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication? googleAuth =
-          await googleUser?.authentication;
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-      final image = FirebaseAuth.instance.currentUser?.photoURL;
-      final nme = FirebaseAuth.instance.currentUser?.displayName;
-      final email = FirebaseAuth.instance.currentUser?.email;
-      final id = FirebaseAuth.instance.currentUser?.uid;
-      final token = await FirebaseMessaging.instance.getToken();
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
-      // Create a new credential
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken,
-      );
-      FirebaseAuth.instance.signInWithCredential(credential);
+    final image = FirebaseAuth.instance.currentUser?.photoURL;
+    final nme = FirebaseAuth.instance.currentUser?.displayName;
+    final email = FirebaseAuth.instance.currentUser?.email;
+    final id = FirebaseAuth.instance.currentUser?.uid;
+    final token = await FirebaseMessaging.instance.getToken();
 
-      if (auth.currentUser!.uid == email) {
-        firestore.collection('users').doc(auth.currentUser?.uid).get();
-      }
-      showAdaptiveDialog(
-          context: context,
-          builder: ((context) {
-            return AlertDialog.adaptive(
-              backgroundColor: Colors.transparent,
-              content: SizedBox(
-                width: Get.width * .2,
-                height: Get.height * .1,
-                child: const Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ),
-            );
-          }));
-      var re = await firestore
-          .collection('users')
-          .doc(id)
-          .set({
-            'id': id,
-            'image': image,
-            'email': email,
-            "name": nme,
-            'token': token
-          })
-          .then((value) {})
-          .whenComplete(() {
-            navigator?.pushReplacementNamed('/home');
-            Get.snackbar('Welcome', 'Welcome To Chatty');
-          });
-      return re;
-    } catch (e) {
-      throw Exception(e.toString());
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    FirebaseAuth.instance.signInWithCredential(credential);
+
+    if (auth.currentUser!.uid == email) {
+      firestore.collection('users').doc(auth.currentUser?.uid).get();
     }
+    showAdaptiveDialog(
+        context: context,
+        builder: ((context) {
+          return AlertDialog.adaptive(
+            backgroundColor: Colors.transparent,
+            content: SizedBox(
+              width: Get.width * .2,
+              height: Get.height * .1,
+              child: const Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        }));
+    var re = await firestore
+        .collection('users')
+        .doc(id)
+        .set({
+          'id': id,
+          'image': image,
+          'email': email,
+          "name": nme,
+          'token': token
+        })
+        .then((value) {})
+        .whenComplete(() {
+          navigator?.pushReplacementNamed('/home');
+          Get.snackbar('Welcome', 'Welcome To Chatty');
+        });
+    return re;
   }
 
 //sign out
   signout() {
+    GoogleSignIn().currentUser?.clearAuthCache();
+    GoogleSignIn().signOut();
     final user = auth.signOut().then((value) {
       navigator?.pushReplacementNamed('/LoginScreen');
     });
